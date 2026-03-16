@@ -81,8 +81,10 @@ export default function ProbabilityChart({ currentPulls }: Props) {
                 borderRadius: "8px",
                 color: "#fff",
               }}
-              formatter={(value: string | number) => [`${value}%`, "Probability"]}
-              labelFormatter={(label: string | number) => `Pull #${label}`}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              formatter={(value: any) => [`${value}%`, "Probability"]}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              labelFormatter={(label: any) => `Pull #${label}`}
             />
             <ReferenceLine
               x={GAME_CONFIG.softPityStart}
