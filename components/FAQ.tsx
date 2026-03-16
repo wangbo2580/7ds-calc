@@ -11,32 +11,44 @@ interface FAQItem {
 const faqs: FAQItem[] = [
   {
     question:
-      "How many pulls do I need for a guaranteed 5-star in 7DS Origin?",
-    answer: `Based on current data, the hard pity in Seven Deadly Sins: Origin is ${GAME_CONFIG.hardPity} pulls. This means you are guaranteed to receive a 5-star character within ${GAME_CONFIG.hardPity} pulls on a banner. The base rate for a 5-star is ${(GAME_CONFIG.baseRate * 100).toFixed(0)}%, with increased rates starting at pull ${GAME_CONFIG.softPityStart} (soft pity).`,
+      "How many pulls for a guaranteed SSR in 7DS Origin?",
+    answer: `You are guaranteed an SSR character within ${GAME_CONFIG.hardPity} pulls on any banner. This is the hard pity. Most players will get their SSR earlier thanks to soft pity, which starts increasing your odds around pull ${GAME_CONFIG.softPityStart}.`,
   },
   {
-    question: "What is soft pity in Seven Deadly Sins Origin?",
-    answer: `Soft pity is when the game starts increasing your chances of pulling a 5-star character. In 7DS Origin, soft pity is estimated to begin at pull ${GAME_CONFIG.softPityStart}. After this point, each pull adds approximately ${(GAME_CONFIG.softPityIncrement * 100).toFixed(0)}% to your base rate, making it significantly more likely to pull a 5-star as you approach hard pity.`,
-  },
-  {
-    question: "Does pity carry over between banners in 7DS Origin?",
-    answer:
-      "This is not yet confirmed for Seven Deadly Sins: Origin. In many gacha games (including the previous 7DS: Grand Cross), pity does carry over between banners of the same type. We will update this information once the game officially launches on March 16, 2026.",
+    question: "How many pulls for the featured (rate-up) character?",
+    answer: `There are two safety nets for the featured character: (1) The 50/50 system — if you lose it, your next SSR is guaranteed to be the rate-up character (worst case: 80+80 = 160 pulls). (2) The 120-pull one-time guarantee — within 120 pulls, you will get the featured character regardless. So the absolute worst case for a specific rate-up character is ${GAME_CONFIG.guaranteedRateUp} pulls (or ${GAME_CONFIG.absoluteWorstCase} via the 50/50 path).`,
   },
   {
     question: "What is the 50/50 system in 7DS Origin?",
     answer:
-      'When you pull a 5-star character, there is a 50% chance it will be the featured (rate-up) character and a 50% chance it will be a standard 5-star character. If you "lose" the 50/50 (get a non-featured character), your next 5-star is guaranteed to be the featured character. This is the "guaranteed" status in our calculator.',
+      'When you pull an SSR, there\'s a 50% chance it\'s the featured (rate-up) character and a 50% chance it\'s a standard SSR. If you "lose" the 50/50, your next SSR is 100% guaranteed to be the featured character. This resets after you get the featured character.',
   },
   {
-    question:
-      "How many Diamonds do I need per pull in Seven Deadly Sins Origin?",
-    answer: `Each single pull costs approximately ${GAME_CONFIG.currencyPerPull} ${GAME_CONFIG.currencyName}, and a 10-pull costs ${GAME_CONFIG.currencyPerPull * GAME_CONFIG.multiPullCount} ${GAME_CONFIG.currencyName}. Note: These numbers are estimated based on CBT data and will be updated after the game's official launch.`,
+    question: "What is soft pity in Seven Deadly Sins Origin?",
+    answer: `Soft pity is when the game silently increases your pull rates. In 7DS Origin, this is estimated to start around pull ${GAME_CONFIG.softPityStart}. The exact numbers haven't been officially disclosed yet, but community data suggests rates ramp up significantly in this zone. Most players get their SSR between pull ${GAME_CONFIG.softPityStart} and ${GAME_CONFIG.hardPity}.`,
   },
   {
-    question: "When does Seven Deadly Sins: Origin launch?",
+    question: "Does pity carry over between banners?",
     answer:
-      "Seven Deadly Sins: Origin launches on March 16, 2026 for PC (Steam) and PS5, followed by a mobile (iOS/Android) release on March 23, 2026. The game is developed by Netmarble, the same studio behind 7DS: Grand Cross.",
+      "This is still being confirmed by the community. Based on similar Netmarble games and early player reports, pity is expected to carry over between banners of the same type. We will update this once officially confirmed.",
+  },
+  {
+    question: `How much ${GAME_CONFIG.currencyName} do I need per pull?`,
+    answer: `Each single pull costs ${GAME_CONFIG.currencyPerPull} ${GAME_CONFIG.currencyName}. A 10-pull costs ${(GAME_CONFIG.currencyPerPull * GAME_CONFIG.multiPullCount).toLocaleString()} ${GAME_CONFIG.currencyName} (no discount). To reach hard pity (${GAME_CONFIG.hardPity} pulls) you need ${(GAME_CONFIG.hardPity * GAME_CONFIG.currencyPerPull).toLocaleString()} ${GAME_CONFIG.currencyName}. For the 120-pull guarantee: ${(GAME_CONFIG.guaranteedRateUp * GAME_CONFIG.currencyPerPull).toLocaleString()} ${GAME_CONFIG.currencyName}.`,
+  },
+  {
+    question: "How many free pulls do you get at launch?",
+    answer: `The game gives approximately ${GAME_CONFIG.launchFreePulls} free pulls through launch events, login rewards, story progression, and missions. That's enough to hit the 120-pull rate-up guarantee at least twice! Make sure to complete all launch missions to maximize your free resources.`,
+  },
+  {
+    question: "Is there a weapon banner in 7DS Origin?",
+    answer:
+      "No. Seven Deadly Sins: Origin does not have a weapon banner. All summons are character-focused. This is confirmed from the launch livestream.",
+  },
+  {
+    question: "Who is the first rate-up character?",
+    answer:
+      "The launch banner features Meliodas as the rate-up character. This is a special Pick Up Draw banner available for 3 weeks after your first login. The standard pity system (80 SSR / 120 rate-up guarantee) applies.",
   },
 ];
 

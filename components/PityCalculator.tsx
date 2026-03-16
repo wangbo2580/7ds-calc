@@ -26,7 +26,6 @@ export default function PityCalculator({
   const [ownedTickets, setOwnedTickets] = useState(0);
   const [result, setResult] = useState<PityResult | null>(null);
 
-  // Load saved inputs
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -54,17 +53,10 @@ export default function PityCalculator({
     setResult(r);
     onPullsChange?.(currentPulls);
 
-    // Save to localStorage
     try {
       localStorage.setItem(
         STORAGE_KEY,
-        JSON.stringify({
-          currentPulls,
-          isGuaranteed,
-          targetCharacters,
-          ownedCurrency,
-          ownedTickets,
-        })
+        JSON.stringify({ currentPulls, isGuaranteed, targetCharacters, ownedCurrency, ownedTickets })
       );
     } catch {
       // ignore
@@ -75,8 +67,8 @@ export default function PityCalculator({
     compute();
   }, [compute]);
 
-  const pityProgress = (currentPulls / GAME_CONFIG.hardPity) * 100;
   const inSoftPity = currentPulls >= GAME_CONFIG.softPityStart;
+  const pityProgress = (currentPulls / GAME_CONFIG.hardPity) * 100;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -89,7 +81,7 @@ export default function PityCalculator({
         {/* Current Pulls */}
         <div className="mb-5">
           <label className="block text-sm text-gray-400 mb-2">
-            Current Pity Count
+            Current Pity Count (within 80-pull cycle)
           </label>
           <div className="flex items-center gap-3">
             <input
@@ -107,20 +99,20 @@ export default function PityCalculator({
               value={currentPulls}
               onChange={(e) =>
                 setCurrentPulls(
-                  Math.min(
-                    GAME_CONFIG.hardPity,
-                    Math.max(0, Number(e.target.value) || 0)
-                  )
+                  Math.min(GAME_CONFIG.hardPity, Math.max(0, Number(e.target.value) || 0))
                 )
               }
               className="w-16 bg-[#0f0f1a] border border-[#2a2a4a] rounded-lg px-2 py-1.5 text-center text-white text-lg font-mono"
             />
-            <span className="text-gray-500 text-sm">
-              / {GAME_CONFIG.hardPity}
-            </span>
+            <span className="text-gray-500 text-sm">/ {GAME_CONFIG.hardPity}</span>
           </div>
           {/* Progress bar */}
-          <div className="mt-2 h-2 bg-[#0f0f1a] rounded-full overflow-hidden">
+          <div className="mt-2 h-2 bg-[#0f0f1a] rounded-full overflow-hidden relative">
+            {/* Soft pity marker */}
+            <div
+              className="absolute top-0 h-full w-px bg-[#FFD700]/60 z-10"
+              style={{ left: `${(GAME_CONFIG.softPityStart / GAME_CONFIG.hardPity) * 100}%` }}
+            />
             <div
               className={`h-full rounded-full transition-all duration-300 ${
                 inSoftPity
@@ -129,6 +121,11 @@ export default function PityCalculator({
               }`}
               style={{ width: `${pityProgress}%` }}
             />
+          </div>
+          <div className="flex justify-between mt-1 text-[10px] text-gray-600">
+            <span>0</span>
+            <span className="text-[#FFD700]">Soft ~{GAME_CONFIG.softPityStart}</span>
+            <span className="text-[#FF6B35]">Hard {GAME_CONFIG.hardPity}</span>
           </div>
           {inSoftPity && (
             <p className="text-[#FF6B35] text-xs mt-1 font-medium">
@@ -166,8 +163,8 @@ export default function PityCalculator({
           </div>
           <p className="text-gray-500 text-xs mt-1">
             {isGuaranteed
-              ? "Your next 5★ will be the featured character"
-              : "50% chance to get the featured character"}
+              ? "You lost the 50/50 before — your next SSR is guaranteed to be the rate-up character"
+              : "50% chance to get the rate-up character when you pull an SSR"}
           </p>
         </div>
 
@@ -237,35 +234,46 @@ export default function PityCalculator({
             </p>
           </div>
 
-          {/* Pulls to Pity */}
-          <div className="bg-[#0f0f1a] rounded-xl p-4 mb-4">
-            <p className="text-gray-400 text-sm">Pulls to Hard Pity</p>
-            <p className="text-3xl font-bold text-[#FFD700] mt-1">
-              {result.pullsToHardPity}
-            </p>
+          {/* Pity Milestones */}
+          <div className="grid grid-cols-3 gap-2 mb-4">
+            <div className="bg-[#0f0f1a] rounded-xl p-3 text-center">
+              <p className="text-[#FFD700] text-[10px] font-medium">SSR Pity (80)</p>
+              <p className="text-xl font-bold text-white mt-0.5">
+                {result.pullsToHardPity}
+              </p>
+              <p className="text-gray-600 text-[10px]">pulls away</p>
+            </div>
+            <div className="bg-[#0f0f1a] rounded-xl p-3 text-center">
+              <p className="text-[#FF6B35] text-[10px] font-medium">Rate-Up (120)</p>
+              <p className="text-xl font-bold text-white mt-0.5">
+                {result.pullsToGuaranteedRateUp}
+              </p>
+              <p className="text-gray-600 text-[10px]">pulls away</p>
+            </div>
+            <div className="bg-[#0f0f1a] rounded-xl p-3 text-center">
+              <p className="text-[#EF4444] text-[10px] font-medium">Worst (160)</p>
+              <p className="text-xl font-bold text-white mt-0.5">
+                {result.pullsToAbsoluteWorst}
+              </p>
+              <p className="text-gray-600 text-[10px]">pulls away</p>
+            </div>
           </div>
 
           {/* Scenario Cards */}
           <div className="grid grid-cols-3 gap-3 mb-4">
             <div className="bg-[#0f0f1a] rounded-xl p-3 text-center">
               <p className="text-gray-500 text-xs">Best</p>
-              <p className="text-lg font-bold text-[#22C55E]">
-                {result.bestCase}
-              </p>
+              <p className="text-lg font-bold text-[#22C55E]">{result.bestCase}</p>
               <p className="text-gray-600 text-xs">pulls</p>
             </div>
             <div className="bg-[#0f0f1a] rounded-xl p-3 text-center">
               <p className="text-gray-500 text-xs">Average</p>
-              <p className="text-lg font-bold text-[#FFD700]">
-                {result.averageCase}
-              </p>
+              <p className="text-lg font-bold text-[#FFD700]">{result.averageCase}</p>
               <p className="text-gray-600 text-xs">pulls</p>
             </div>
             <div className="bg-[#0f0f1a] rounded-xl p-3 text-center">
               <p className="text-gray-500 text-xs">Worst</p>
-              <p className="text-lg font-bold text-[#EF4444]">
-                {result.worstCase}
-              </p>
+              <p className="text-lg font-bold text-[#EF4444]">{result.worstCase}</p>
               <p className="text-gray-600 text-xs">pulls</p>
             </div>
           </div>
@@ -273,27 +281,29 @@ export default function PityCalculator({
           {/* Resource Check */}
           <div
             className={`rounded-xl p-4 mb-4 border ${
-              result.canReachPity
+              result.canReachHardPity
                 ? "bg-[#22C55E]/10 border-[#22C55E]/30"
                 : "bg-[#EF4444]/10 border-[#EF4444]/30"
             }`}
           >
             <div className="flex items-center gap-2 mb-1">
               <span className="text-2xl">
-                {result.canReachPity ? "\u2705" : "\u274C"}
+                {result.canReachHardPity ? "\u2705" : "\u274C"}
               </span>
               <p className="font-bold text-white">
-                {result.canReachPity
-                  ? "You can reach hard pity!"
-                  : "Not enough for hard pity"}
+                {result.canReachGuaranteed
+                  ? "You can reach the 120-pull rate-up guarantee!"
+                  : result.canReachHardPity
+                    ? "You can reach 80-pull hard pity!"
+                    : "Not enough for hard pity (80)"}
               </p>
             </div>
             <p className="text-sm text-gray-400">
               Available: {result.totalPullsAvailable} pulls
-              {!result.canReachPity && (
+              {!result.canReachHardPity && (
                 <span className="text-[#EF4444]">
                   {" "}
-                  (need {result.pullsShort} more = {result.currencyShort.toLocaleString()}{" "}
+                  (need {result.pullsShortHardPity} more = {result.currencyShortHardPity.toLocaleString()}{" "}
                   {GAME_CONFIG.currencyName})
                 </span>
               )}

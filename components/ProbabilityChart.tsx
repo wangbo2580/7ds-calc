@@ -22,7 +22,6 @@ export default function ProbabilityChart({ currentPulls }: Props) {
   const [mounted, setMounted] = useState(false);
   const data = useMemo(() => generateProbDistribution(currentPulls), [currentPulls]);
 
-  // Sample every 5 pulls for cleaner display, but keep key points
   const chartData = useMemo(() => {
     return data.filter(
       (d) =>
@@ -54,7 +53,7 @@ export default function ProbabilityChart({ currentPulls }: Props) {
         Probability Distribution
       </h2>
       <p className="text-gray-500 text-sm mb-4">
-        Per-pull 5★ probability (%) across the pity cycle
+        Per-pull SSR probability (%) within the 80-pull pity cycle
       </p>
 
       <div className="w-full h-[250px] sm:h-[300px]" style={{ minWidth: 300, minHeight: 250 }}>
@@ -90,9 +89,9 @@ export default function ProbabilityChart({ currentPulls }: Props) {
               stroke="#FFD700"
               strokeDasharray="3 3"
               label={{
-                value: "Soft Pity",
+                value: `Soft ~${GAME_CONFIG.softPityStart}`,
                 fill: "#FFD700",
-                fontSize: 11,
+                fontSize: 10,
                 position: "top",
               }}
             />
@@ -122,11 +121,27 @@ export default function ProbabilityChart({ currentPulls }: Props) {
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm bg-[#FF6B35]" />
-          <span>Soft Pity Zone</span>
+          <span>Soft Pity ({GAME_CONFIG.softPityStart}+)</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded-sm bg-[#FFD700]" />
           <span>Your Position</span>
+        </div>
+      </div>
+
+      {/* Pity system summary below chart */}
+      <div className="mt-4 grid grid-cols-3 gap-2 text-center text-xs">
+        <div className="bg-[#0f0f1a] rounded-lg p-2">
+          <p className="text-[#FFD700] font-bold">80 pulls</p>
+          <p className="text-gray-500">SSR guaranteed</p>
+        </div>
+        <div className="bg-[#0f0f1a] rounded-lg p-2">
+          <p className="text-[#FF6B35] font-bold">120 pulls</p>
+          <p className="text-gray-500">Rate-up guaranteed</p>
+        </div>
+        <div className="bg-[#0f0f1a] rounded-lg p-2">
+          <p className="text-[#EF4444] font-bold">160 pulls</p>
+          <p className="text-gray-500">Absolute worst case</p>
         </div>
       </div>
     </div>

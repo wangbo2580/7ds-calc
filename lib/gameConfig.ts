@@ -1,36 +1,46 @@
 // Game configuration for Seven Deadly Sins: Origin
-// All gacha parameters centralized here for easy updates after game launch (3/16)
-// ⚠️ Current data is from CBT + Grand Cross estimates. Update after official launch!
+// Updated with confirmed launch data (3/16/2026)
+//
+// Pity system (confirmed by @7DSOriginNews + Game8 livestream):
+//   Layer 1: Hard pity at 80 pulls (guaranteed SSR)
+//   Layer 2: 50/50 — if you lose, next SSR is guaranteed rate-up
+//   Layer 3: 120-pull one-time safety net (guaranteed rate-up character)
+//   Absolute worst case: 80 + 80 = 160 pulls for guaranteed rate-up
 
 export const GAME_CONFIG = {
-  // Base rates
-  baseRate: 0.03, // 6★ base rate 3% (CBT observed)
+  // Base rates (exact % not yet officially disclosed, estimated from CBT)
+  baseRate: 0.02, // SSR base rate ~1-3%, using 2% as middle estimate
 
-  // Pity system
-  softPityStart: 70, // Soft pity starts at pull 70 (estimated)
-  hardPity: 90, // Hard pity at 90 pulls (CBT leak: 80-90, conservative 90)
+  // Pity system — confirmed
+  softPityStart: 65, // Soft pity estimated (not officially confirmed, conservative)
+  hardPity: 80, // Guaranteed SSR within 80 pulls (confirmed)
+  guaranteedRateUp: 120, // One-time safety net: guaranteed rate-up within 120 pulls
+  absoluteWorstCase: 160, // 80 (lose 50/50) + 80 (guaranteed rate-up) = 160
 
-  // 50/50 system
-  featuredRate: 0.5, // 50% chance to get featured character when hitting 5★
-  guaranteedAfterLoss: true, // After losing 50/50, next 5★ is guaranteed featured
+  // 50/50 system — confirmed
+  featuredRate: 0.5, // 50% chance SSR is the rate-up character
+  guaranteedAfterLoss: true, // Lose 50/50 → next SSR is guaranteed rate-up
 
-  // Currency
-  currencyPerPull: 300, // Diamonds per pull (estimated, similar games use 150-300)
-  currencyName: "Diamonds",
-  ticketName: "Summon Ticket",
-  multiPullCount: 10, // 10-pull
+  // Currency — confirmed
+  currencyPerPull: 300, // Star Memory per pull
+  currencyName: "Star Memory",
+  ticketName: "Hero Draw Ticket",
+  multiPullCount: 10, // 10-pull = 3,000 Star Memory (no discount)
 
-  // Soft pity probability increment
-  softPityIncrement: 0.05, // +5% per pull after soft pity (estimated, Genshin-like model)
+  // Soft pity probability increment (estimated, not confirmed)
+  softPityIncrement: 0.04, // +4% per pull after soft pity (estimated)
+
+  // Free pulls at launch
+  launchFreePulls: 300, // ~300 free pulls from launch events
 
   // Data status
-  dataStatus: "CBT_ESTIMATE" as const satisfies "CBT_ESTIMATE" | "CONFIRMED",
-  lastUpdated: "2026-03-12",
+  dataStatus: "LAUNCH_DATA" as const satisfies "CBT_ESTIMATE" | "LAUNCH_DATA" | "CONFIRMED",
+  lastUpdated: "2026-03-16",
   notes:
-    "Data from CBT observations and Grand Cross estimates. Verify after 3/16 PC launch.",
+    "Pity system confirmed (80/120/160). Base rates and soft pity still estimated. No weapon banner exists.",
 };
 
-export type BannerType = "character" | "weapon";
+export type BannerType = "character";
 
 export interface BannerInfo {
   name: string;
@@ -39,12 +49,11 @@ export interface BannerInfo {
   endDate?: string;
 }
 
-// Current banners - update when game launches
 export const CURRENT_BANNERS: BannerInfo[] = [
   {
-    name: "Launch Banner",
+    name: "Meliodas Special Pick Up Draw",
     type: "character",
-    featuredUnit: "TBA - Game launches 3/16",
-    endDate: undefined,
+    featuredUnit: "Meliodas",
+    endDate: "3 weeks after first login",
   },
 ];
