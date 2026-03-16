@@ -81,8 +81,8 @@ export default function ProbabilityChart({ currentPulls }: Props) {
                 borderRadius: "8px",
                 color: "#fff",
               }}
-              formatter={(value: number) => [`${value}%`, "Probability"]}
-              labelFormatter={(label: number) => `Pull #${label}`}
+              formatter={(value: string | number) => [`${value}%`, "Probability"]}
+              labelFormatter={(label: string | number) => `Pull #${label}`}
             />
             <ReferenceLine
               x={GAME_CONFIG.softPityStart}
