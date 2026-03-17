@@ -4,6 +4,8 @@ import { useState } from "react";
 import PityCalculator from "@/components/PityCalculator";
 import ProbabilityChart from "@/components/ProbabilityChart";
 import FAQ from "@/components/FAQ";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 import { GAME_CONFIG } from "@/lib/gameConfig";
 
 export default function Home() {
@@ -11,25 +13,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-[#0a0a14]">
-      {/* Header */}
-      <header className="border-b border-[#2a2a4a] bg-[#0f0f1a]/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold">
-              <span className="text-[#FFD700]">7DS Origin</span>{" "}
-              <span className="text-white">Pity Calculator</span>
-            </h1>
-            <p className="text-gray-500 text-xs sm:text-sm mt-0.5">
-              Seven Deadly Sins: Origin — Summon Calculator & Resource Planner
-            </p>
-          </div>
-          <div className="hidden sm:block bg-[#22C55E]/10 border border-[#22C55E]/30 rounded-lg px-3 py-1.5">
-            <p className="text-[#22C55E] text-xs font-medium">
-              Updated {GAME_CONFIG.lastUpdated}
-            </p>
-          </div>
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="max-w-5xl mx-auto px-4 py-6 sm:py-8 space-y-6">
         {/* Launch Notice */}
@@ -142,19 +126,7 @@ export default function Home() {
         {/* FAQ */}
         <FAQ />
 
-        {/* Footer */}
-        <footer className="text-center py-8 space-y-3">
-          <p className="text-gray-600 text-xs">
-            7DS Calc is a fan-made tool and is not affiliated with Netmarble or
-            the Seven Deadly Sins franchise.
-          </p>
-          <p className="text-gray-700 text-xs">
-            Last updated: {GAME_CONFIG.lastUpdated} | Data source: in-game rate disclosures & community research
-          </p>
-          <p className="text-gray-700 text-xs">
-            &copy; {new Date().getFullYear()} 7dscalc.com
-          </p>
-        </footer>
+        <SiteFooter />
       </main>
 
       {/* JSON-LD Structured Data */}
