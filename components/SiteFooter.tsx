@@ -8,6 +8,15 @@ export default function SiteFooter() {
         <Link href="/" className="text-gray-400 hover:text-[#FFD700] transition-colors">
           Pity Calculator
         </Link>
+        <Link href="/team-builder" className="text-gray-400 hover:text-[#FFD700] transition-colors">
+          Team Builder
+        </Link>
+        <Link href="/weapon-optimizer" className="text-gray-400 hover:text-[#FFD700] transition-colors">
+          Weapon Optimizer
+        </Link>
+        <Link href="/damage-calculator" className="text-gray-400 hover:text-[#FFD700] transition-colors">
+          Damage Calculator
+        </Link>
         <Link href="/tier-list" className="text-gray-400 hover:text-[#FFD700] transition-colors">
           Tier List
         </Link>

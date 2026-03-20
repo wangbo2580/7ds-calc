@@ -5,9 +5,12 @@ import { usePathname } from "next/navigation";
 import { GAME_CONFIG } from "@/lib/gameConfig";
 
 const NAV_LINKS = [
-  { href: "/", label: "Calculator" },
+  { href: "/", label: "Pity" },
+  { href: "/team-builder", label: "Teams" },
+  { href: "/weapon-optimizer", label: "Weapons" },
+  { href: "/damage-calculator", label: "Damage" },
   { href: "/tier-list", label: "Tier List" },
-  { href: "/reroll-guide", label: "Reroll Guide" },
+  { href: "/reroll-guide", label: "Reroll" },
   { href: "/banners", label: "Banners" },
 ];
 
@@ -21,11 +24,11 @@ export default function SiteHeader() {
           <Link href="/" className="block">
             <h1 className="text-xl sm:text-2xl font-bold">
               <span className="text-[#FFD700]">7DS Origin</span>{" "}
-              <span className="text-white">Pity Calculator</span>
+              <span className="text-white">Calculator</span>
             </h1>
           </Link>
           <p className="text-gray-500 text-xs sm:text-sm mt-0.5">
-            Seven Deadly Sins: Origin — Summon Calculator & Resource Planner
+            Seven Deadly Sins: Origin — Pity Calculator, Team Builder & Tools
           </p>
         </div>
         <div className="hidden sm:block bg-[#22C55E]/10 border border-[#22C55E]/30 rounded-lg px-3 py-1.5">
