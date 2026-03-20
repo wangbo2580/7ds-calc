@@ -33,7 +33,7 @@ export default function SiteHeader() {
         </div>
         <div className="hidden sm:block bg-[#22C55E]/10 border border-[#22C55E]/30 rounded-lg px-3 py-1.5">
           <p className="text-[#22C55E] text-xs font-medium">
-            Updated {GAME_CONFIG.lastUpdated}
+            EA Season 1
           </p>
         </div>
       </div>
