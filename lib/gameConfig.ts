@@ -35,7 +35,7 @@ export const GAME_CONFIG = {
 
   // Data status
   dataStatus: "LAUNCH_DATA" as const satisfies "CBT_ESTIMATE" | "LAUNCH_DATA" | "CONFIRMED",
-  lastUpdated: "2026-03-16",
+  lastUpdated: "2026-03-20",
   notes:
     "Pity system confirmed (80/120/160). Base rates and soft pity still estimated. No weapon banner exists.",
 };
